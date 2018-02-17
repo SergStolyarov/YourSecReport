@@ -1,10 +1,11 @@
 from adapters.api import ToolAdapter
 from libnmap.process import NmapProcess
 from libnmap.parser import NmapParser, NmapParserException
-
+from json import dumps
+from time import sleep
 
 class NmapAdapter(ToolAdapter):
-    def __init__(self, ip, commandline):
+    def __init__(self, ip, commandline=None):
         if self.is_valid_ip(ip):
             self.ip = ip
         else:
@@ -17,7 +18,7 @@ class NmapAdapter(ToolAdapter):
         self.nmproc = NmapProcess(self.ip, self.commandline)
 
     def start(self):
-        rc = self.nmproc.run()  #or .run_background()
+        rc = self.nmproc.run_background()  #or .run()
         if rc != 0:
             print("nmap scan failed: {0}".format(self.nmproc.stderr))
         print(type(self.nmproc.stdout))
@@ -43,10 +44,13 @@ class NmapAdapter(ToolAdapter):
             report = NmapParser.parse(self.nmproc.stdout)
         except NmapParserException as e:
             print("Exception raised while parsing scan: {0}".format(e.msg))
-        starttime = report.started
-        endtime = report.endtime
+            return None
+        report_dict = {}
+        report_dict['starttime'] = report.started
+        report_dict['endtime'] = report.endtime
+        report_dict['host'] = self.ip
         host = report.hosts[0]
-        hoststatus = host.status
+        report_dict['hoststatus'] = host.status
         services = []
         for serv in host.services:
             service = {}
@@ -57,8 +61,14 @@ class NmapAdapter(ToolAdapter):
             if len(serv.banner):
                 service['banner'] = serv.banner
             services.append(service)
-
+        report_dict['services'] = services
+        json_data = dumps(report_dict)
+        return json_data
 
 if __name__ == '__main__':
     adapter = NmapAdapter('127.0.0.1')
     adapter.start()
+    while('running' in adapter.status()):
+        print(adapter.status())
+        sleep(1)
+    print(adapter.get_result_json())
