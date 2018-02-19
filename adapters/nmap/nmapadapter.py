@@ -60,6 +60,16 @@ class NmapAdapter(ToolAdapter):
             service['service'] = serv.service
             if len(serv.banner):
                 service['banner'] = serv.banner
+            if len(serv.cpelist):
+                cpe = {}
+                cpe['part'] = serv.cpelist[0].get_part()
+                cpe['vendor'] = serv.cpelist[0].get_vendor()
+                cpe['product'] = serv.cpelist[0].get_product()
+                cpe['version'] = serv.cpelist[0].get_version()
+                cpe['update'] = serv.cpelist[0].get_update()
+                cpe['edition'] = serv.cpelist[0].get_edition()
+                cpe['language'] = serv.cpelist[0].get_language()
+                service['cpe'] = cpe
             services.append(service)
         report_dict['services'] = services
         json_data = dumps(report_dict)
