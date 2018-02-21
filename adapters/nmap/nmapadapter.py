@@ -18,10 +18,9 @@ class NmapAdapter(ToolAdapter):
         self.nmproc = NmapProcess(self.ip, self.commandline)
 
     def start(self):
-        rc = self.nmproc.run_background()  #or .run()
+        rc = self.nmproc.run() 
         if rc != 0:
             print("nmap scan failed: {0}".format(self.nmproc.stderr))
-        print(type(self.nmproc.stdout))
 
     def status(self):
         if self.nmproc.is_running():
