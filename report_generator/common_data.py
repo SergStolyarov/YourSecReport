@@ -9,13 +9,24 @@ def get_close_tag(tag):
     return "".join(close_tag)
 
 
-def wraper_tag_anything(open_tag, body, close_tag=None, sep="\n"):
+def insert_prop(tag, prop):
+    prop_with_space = " " + prop
+    upd_tag = list(tag)
+    upd_tag.insert(-1, prop_with_space)
+    return "".join(upd_tag)
+
+
+def wraper_tag_anything(open_tag, body, close_tag=None, sep="\n", prop=None):
     if not close_tag:
         close_tag = get_close_tag(open_tag)
+
+    if prop is not None:
+        open_tag = insert_prop(open_tag, prop)
+
     return sep.join([open_tag, body, close_tag])
 
 
-def wraper_html_tag(tag, body_str, sep="\n"):
+def wraper_html_tag(tag, body_str, sep="\n", prop=None):
     html_tags = ["<html>",
                  "<head>",
                  "<style>",
@@ -32,7 +43,7 @@ def wraper_html_tag(tag, body_str, sep="\n"):
     if tag not in html_tags:
         raise "This tag not support"
 
-    return wraper_tag_anything(tag, body_str, sep=sep)
+    return wraper_tag_anything(tag, body_str, sep=sep, prop=prop)
 
 
 def get_head_doc():
@@ -48,7 +59,7 @@ def get_head_doc():
 
 
 def get_head_table(head_lst):
-    head_table = [wraper_html_tag("<th>", header.upper(), sep="") for header in head_lst]
+    head_table = [wraper_html_tag("<th>", header.upper(), sep="", prop=width) for header, width in head_lst.items()]
     head_table = "".join(head_table)
     head_table = wraper_html_tag("<tr>", head_table, sep="")
     return head_table
