@@ -23,10 +23,10 @@ class NmapAdapter(ToolAdapter):
 
     @log(logger)
     def start(self):
-        logger.info('nmap started on IP', self.ip)
+        logger.info('nmap started on IP {}'.format(self.ip))
         rc = self.nmproc.run_background()
         if self.nmproc.stderr:
-            logger.critical('nmap has failed:', self.nmproc.stderr)
+            logger.critical('nmap has failed: {0}'.format(self.nmproc.stderr))
             print('nmap scan has failed:', self.nmproc.stderr)
 
     def status(self):

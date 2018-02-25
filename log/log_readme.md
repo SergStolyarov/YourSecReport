@@ -12,3 +12,5 @@ Logger levels:
 * `logger.warn('warn message')`
 * `logger.error('error message')`
 * `logger.critical('critical message')`
+
+**All parameters must be str!**
