@@ -3,8 +3,12 @@ from libnmap.process import NmapProcess
 from libnmap.parser import NmapParser, NmapParserException
 from json import dumps
 from time import sleep
+from log.log_config import log, configlogging
+
+logger = configlogging()
 
 class NmapAdapter(ToolAdapter):
+    @log(logger)
     def __init__(self, ip, commandline=None):
         if self.is_valid_ip(ip):
             self.ip = ip
@@ -17,10 +21,13 @@ class NmapAdapter(ToolAdapter):
             self.commandline = '-sV'
         self.nmproc = NmapProcess(self.ip, self.commandline)
 
+    @log(logger)
     def start(self):
-        rc = self.nmproc.run() 
-        if rc != 0:
-            print("nmap scan failed: {0}".format(self.nmproc.stderr))
+        logger.info('nmap started on IP', self.ip)
+        rc = self.nmproc.run_background()
+        if self.nmproc.stderr:
+            logger.critical('nmap has failed:', self.nmproc.stderr)
+            print('nmap scan has failed:', self.nmproc.stderr)
 
     def status(self):
         if self.nmproc.is_running():
@@ -33,15 +40,18 @@ class NmapAdapter(ToolAdapter):
             else:
                 return 'stopped'
 
+    @log(logger)
     def stop(self):
         if self.nmproc.is_running():
             self.nmproc.stop()
 
+    @log(logger)
     def get_result_json(self):
         report = None
         try:
             report = NmapParser.parse(self.nmproc.stdout)
         except NmapParserException as e:
+            logger.critical("Exception raised while parsing scan: {0}".format(e.msg))
             print("Exception raised while parsing scan: {0}".format(e.msg))
             return None
         report_dict = {}
