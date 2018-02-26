@@ -23,7 +23,7 @@ class Client_DB:
         self.db = client.test_db
         self.collection = self.db.client_coll
 
-    def add_client(self, login, passwd, mail, target):
+    def add_client(self, login, passwd, mail, target=[]):
         """добавляет юзера в базу"""
         if self.get_client(login):
             return False
