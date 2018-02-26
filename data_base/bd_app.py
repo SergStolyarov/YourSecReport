@@ -1,9 +1,12 @@
+import configparser
 from pymongo import MongoClient, DESCENDING
 
-USER = "admin"
-PASS = "yoursecreport"
-IP_BASE = "212.109.192.124"
-TEST_BASE_NAME = "test_db"
+
+config = configparser.ConfigParser()
+config.read("settings.secret")
+USER = config["mongo_connect"]["User"]
+PASSWORD = config["mongo_connect"]["Password"]
+IP_BASE = config["mongo_connect"]["IP"]
 
 
 class Client_DB:
@@ -16,7 +19,7 @@ class Client_DB:
 
     def __init__(self):
         """создает подключение к базе и коллекции"""
-        client = MongoClient('mongodb://{}'.format(IP_BASE))
+        client = MongoClient('mongodb://{}:{}@{}'.format(USER, PASSWORD, IP_BASE))
         self.db = client.test_db
         self.collection = self.db.client_coll
 

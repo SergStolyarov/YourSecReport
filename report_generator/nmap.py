@@ -2,7 +2,11 @@ from .common_data import *
 
 
 def nmap_rep_generate(report):
-    table_header = ["port", "protocol", "state", "service", "banner"]
+    table_header = {"port": "width=\"65\"",
+                    "protocol": "width=\"95\"",
+                    "state": "width=\"75\"",
+                    "service": "width=\"85\"",
+                    "banner": None}
 
     head_rep = get_head_doc()
 
