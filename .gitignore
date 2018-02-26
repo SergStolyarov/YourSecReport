@@ -21,4 +21,4 @@ include/
 include/*
 
 env
-.secret
+*.secret
