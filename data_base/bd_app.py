@@ -80,7 +80,7 @@ class Report_DB:
 
     def __init__(self):
         """создает подключение к базе и коллекции"""
-        client = MongoClient('mongodb://{}'.format(IP_BASE))
+        client = MongoClient('mongodb://{}:{}@{}'.format(USER, PASSWORD, IP_BASE))
         self.db = client.test_db
         self.collection = self.db.report_coll
 
