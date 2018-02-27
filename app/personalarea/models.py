@@ -1,26 +1,27 @@
 from flask_login import UserMixin, login_user
 from werkzeug.security import check_password_hash
-#from manager import login_manager
+from app import login_manager
+from app.database import db
 
 
-
-#@login_manager.user_loader
-#def load_user(username):
-#    u = app.config['USER_COLLECTION'].find_one({"_id": username})
-#    if not u:
-#        return None
-#    return User(u['_id'])
+@login_manager.user_loader
+def load_user(username):
+    u = db.get_client(username)
+    if not u:
+        return None
+    return User(u['login'])
 
 
 class User(UserMixin):
     def __init__(self, username):
-        self._name = username
-        self._email = user_email[username]
-        self._data = user_data[username]
+        self._user = db.get_client(username)
+        self._name = self._user['login']
+        self._email = self._user['mail']
+        self._hash_pwd = self._user['password']
+        self._services = self._user['target']
 
     def get_id(self):
         return self._name
 
-    @staticmethod
-    def validate_login(password_hash, password):
-        return check_password_hash(password_hash, password)
+    def check_password(self, password):
+        return check_password_hash(self._hash_pwd, password)

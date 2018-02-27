@@ -32,7 +32,7 @@ class Client_DB:
         to_base = {self.iw["login"]: login,
                    self.iw["password"]: passwd,
                    self.iw["mail"]: mail,
-                   self.iw["target"]: [target],
+                   self.iw["target"]: target,
                    self.iw["cr_time"]: datetime.datetime.utcnow(),
                    }
         return self.collection.insert_one(to_base).acknowledged

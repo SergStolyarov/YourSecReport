@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import TextField, PasswordField
-from wtforms.validators import Required, Email, ValidationError, IPAddress
-
-from .db_utils import *
+from wtforms.validators import Required, Email, ValidationError, IPAddress, DataRequired
+from app.database import db
 
 
 def check_user_unique(form, username):
@@ -19,14 +18,24 @@ def check_password(form, password):
 
 
 class SignUpForm(FlaskForm):
-    name = TextField('name', validators=[Required(), check_user_unique])
+    name = TextField('name', validators=[Required()])
     email = TextField('email', validators=[Required(), Email(message='Wrong email format')])
     password = PasswordField('password', validators=[Required()])
 
+    def validate_username(self, name):
+        user = db.get_client(name)
+        if user is not None:
+            raise ValidationError('Please use a different username.')
+
 
 class LoginForm(FlaskForm):
-    name = TextField('name', validators=[Required(), check_user_exists])
-    password = PasswordField('password', validators=[Required(), lambda f,p: check_password(f, p)])
+    name = TextField('name', validators=[Required()])
+    password = PasswordField('password', validators=[Required()])
+
+    def validate_username(self, name):
+        user = db.get_client(name)
+        if user is not None:
+            raise ValidationError('Invalid username or bad password.')
 
 class AddServiceForm(FlaskForm):
     ip = TextField('ip', validators=[Required(), IPAddress(ipv4=True, message='Please input valid IP')])

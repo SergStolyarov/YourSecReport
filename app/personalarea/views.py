@@ -1,64 +1,62 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_wtf.csrf import CSRFProtect
 from .models import User
-from .forms import LoginForm, SignUpForm
+from .forms import LoginForm, SignUpForm, AddServiceForm
 from flask_login import login_user, logout_user, login_required, current_user
+from werkzeug.security import generate_password_hash
+from app.database import db
 
 personalarea = Blueprint('personalarea', __name__)
 
 @personalarea.route("/", methods=['GET'])
 def main():
-    #return "Hello"
     return render_template("index.html")
 
 
 @personalarea.route("/personal", methods=['POST', 'GET'])
 def personal():
-
     form = AddServiceForm()
-    services = user_data[current_user._name].setdefault('services', [])
+    services = current_user._services
     if form.validate_on_submit():
         new_service_ip = form.ip.data
-        user_data[current_user._name]['services'].append(new_service_ip)
-        store_database()
-        return redirect(url_for('personal'))
+        db.add_target(current_user._name, new_service_ip)
+        return redirect(url_for('personalarea.personal'))
 
     return render_template("personal.html", form=form, services=services)
 
 @personalarea.route("/signup", methods=['POST', 'GET'])
 def sign_up():
 
+    if current_user.is_authenticated:
+        return redirect("/personal")
+
     form = SignUpForm()
 
-    if request.method == 'POST':
-
-        if form.validate_on_submit():
-            users = mongo
-            name = form.name.data
-            email = form.email.data
-            password = form.password.data
-
-            user_email[name] = email
-            user_credentials[name] = password
-            user_data[name] = {}
-        store_database()
-
-        return redirect(url_for('login', name=request.form.get("name"),
-            password=request.form.get("password")), code=307)
-    else:
-        return render_template("signup.html", form=form)
+    if form.validate_on_submit():
+        name = form.name.data
+        form.validate_username(name)
+        email = form.email.data
+        password = form.password.data
+        hash_pwd = generate_password_hash(password)
+        db.add_client(name, hash_pwd, email)
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('personalarea.login'))
+    return render_template("signup.html", form=form)
 
 @personalarea.route("/login", methods=['POST', 'GET'])
 def login():
     if current_user.is_authenticated:
-        return redirect("/personal")
-    form = LoginForm()
-    if form.validate_on_submit(): 
-        login_user(User(form.name.data))
-        return redirect("/")
-    else:
+        return redirect(url_for('personalarea.personal'))
 
-        return render_template("login.html", form=form)
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User(form.name.data)
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or bad password.')
+            return redirect(url_for('personalarea.login'))
+        login_user(user)
+        return redirect(url_for('personalarea.personal'))
+    return render_template("login.html", form=form)
 
 @personalarea.route("/logout")
 @login_required
