@@ -19,7 +19,7 @@ class Client_DB:
 
     def __init__(self):
         """создает подключение к базе и коллекции"""
-        client = MongoClient('mongodb://{}:{}@{}'.format(USER, PASSWORD, IP_BASE))
+        client = MongoClient('mongodb://{}:{}@{}'.format(USER, PASSWORD, IP_BASE), connect=False)
         self.db = client.test_db
         self.collection = self.db.client_coll
 
