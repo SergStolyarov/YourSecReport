@@ -12,4 +12,7 @@ def convert_html_to_pdf(source, pdf_filename):
     pdf_file.close()
 
     # return True on success and False on errors
-    return status.err
+    if status.err is 0:
+        return True
+    else:
+        return False
