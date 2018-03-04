@@ -81,8 +81,8 @@ if __name__ == '__main__':
             print('Scanning {0} for user {1} finished'.format(host[1], host[0]))
             for scan in iter(scan_queue.get, None):
                 # Результат скана сохранить в базу и отправить на почту
-                scan_job = Scan(login=host[0], target=host[1], type_name=scan[0], report_json=scan[1])
-                send_queue.put(scan_job)
+                scan_result = Scan(login=host[0], target=host[1], type_name=scan[0], report_json=scan[1])
+                send_queue.put(scan_result)
                 print(host[1], scan[0], scan[1])
                 scan_queue.task_done()
         # Заснуть, если возможно
