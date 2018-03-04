@@ -1,6 +1,10 @@
 .idea/
 .idea/*
 
+*.cache
+*.viminfo
+*.bash_history
+
 lib/
 lib/*
 
