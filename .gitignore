@@ -24,3 +24,4 @@ env
 *.secret
 
 *.ini
+nikto_src

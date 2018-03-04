@@ -70,7 +70,10 @@ def get_body_table(head_lst, reports):
     for report in reports:
         table_string = []
         for notation in head_lst:
-            table_cell = str(report[notation])
+            try:
+                table_cell = str(report[notation])
+            except KeyError:
+                table_cell = '-'
             table_cell = wraper_html_tag("<td>", table_cell, sep="")
             table_string.append(table_cell)
         table_string = "".join(table_string)
