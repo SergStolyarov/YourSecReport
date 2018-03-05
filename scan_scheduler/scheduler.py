@@ -51,7 +51,7 @@ class ReadyScanProcessor(Thread):
                 path, filename = scan.get_pdf_report()
                 print(dir(scan))
                 try:
-                    send_mail(scan.login, path, filename)
+                    send_mail(clientdb.get_mail(scan.login), path, filename)
                 except Exception as e:
                     print(e)
                 send_queue.task_done()
