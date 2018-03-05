@@ -58,7 +58,7 @@ class Client_DB:
 
     def add_target(self, login, target):
         """добавить цель, не может быть больше 5"""
-        if len(self.get_target(login)) >= 5:
+        if len(self.get_target(login)) >= 5 or target in self.get_target(login):
             return False
         return self.collection.update_one({self.iw["login"]: login}, {"$push": {self.iw["target"]: target}}).modified_count
 
