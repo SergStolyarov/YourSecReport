@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/srv/YourSecReport/adapters/nikto'
+let g:netrw_dirhist_2='/srv/YourSecReport/adapters/nikto/nikto_src'
+let g:netrw_dirhist_3='/srv/YourSecReport/adapters/nikto/nikto_src/nikto-master'
+let g:netrw_dirhist_4='/srv/YourSecReport/adapters/nikto/nikto_src/nikto-master/program'

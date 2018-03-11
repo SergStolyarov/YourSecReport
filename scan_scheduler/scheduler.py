@@ -49,7 +49,6 @@ class ReadyScanProcessor(Thread):
                 self.reportdb.add_report(login=scan.login, target=scan.target,
                                          report_type=scan.type_name, report=scan.report_json)
                 path, filename = scan.get_pdf_report()
-                print(dir(scan))
                 try:
                     send_mail(clientdb.get_mail(scan.login), path, filename)
                 except Exception as e:

@@ -33,6 +33,7 @@ class User(UserMixin):
             lst_report = rdb.get_last_report(login=self._name, target=serv)
             if not lst_report:
                 dic_serv_data_last_scan.setdefault(serv, 'don`t scan')
-            dic_serv_data_last_scan[serv] = lst_report[rdb.iw['cr_time']].strftime("%d-%b-%Y %H:%M")
+            else:
+                dic_serv_data_last_scan[serv] = lst_report[rdb.iw['cr_time']].strftime("%d-%b-%Y %H:%M")
         return dic_serv_data_last_scan
 

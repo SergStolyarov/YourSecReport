@@ -7,12 +7,18 @@
 
 # hlsearch on (H) or off (h):
 ~h
+# Last Substitute String:
+$
+
 # Command Line History (newest to oldest):
 :wq
 :q
 :w
+:wq!
+:!
 
 # Search String History (newest to oldest):
+? @$
 
 # Expression History (newest to oldest):
 
@@ -23,30 +29,177 @@
 # Registers:
 
 # File marks:
-'0  22  95  ~/data_base/bd_app.py
-'1  1  0  ~/uwsgi.ini
-'2  5  13  ~/uwsgi.ini
-'3  21  17  ~/uwsgi.ini
+'0  5  7  ~/.gitignore
+'1  1  0  ~/.gitignore
+'2  31  0  ~/.gitignore
+'3  1  0  ~/.gitignor
+'4  1  0  ~/adapters/nikto/nikto_src/nikto-master/program/nikto.pl
+'5  51  53  ~/scan_scheduler/scheduler.py
+'6  37  15  ~/app/personalarea/models.py
+'7  33  15  ~/app/personalarea/models.py
+'8  13  13  ~/settings.secret
+'9  1  0  ~/requirements/base.txt
 
 # Jumplist (newest first):
--'  22  95  ~/data_base/bd_app.py
+-'  5  7  ~/.gitignore
+-'  1  0  ~/.gitignore
+-'  31  0  ~/.gitignore
+-'  1  0  ~/.gitignor
+-'  1  0  ~/adapters/nikto/nikto_src/nikto-master/program/nikto.pl
+-'  12  0  ~/adapters/nikto/nikto_src/nikto-master
+-'  10  0  ~/adapters/nikto/nikto_src
+-'  11  0  ~/adapters/nikto
+-'  11  0  ~/adapters
+-'  22  0  ~/adapters/nikto/nikto_src/nikto-master
+-'  19  0  ~/adapters/nikto/nikto_src
+-'  24  0  ~/adapters/nikto
+-'  51  53  ~/scan_scheduler/scheduler.py
+-'  1  0  ~/scan_scheduler/scheduler.py
+-'  37  15  ~/app/personalarea/models.py
+-'  11  0  ~/app
+-'  33  15  ~/app/personalarea/models.py
+-'  13  13  ~/settings.secret
+-'  1  0  ~/settings.secret
+-'  1  0  ~/requirements/base.txt
+-'  32  15  ~/requirements/base.txt
+-'  81  10  ~/data_base/bd_app.py
+-'  88  95  ~/data_base/bd_app.py
+-'  4  0  ~/data_base/bd_app.py
+-'  1  0  ~/uwsgi.ini
+-'  22  0  ~/app/__init__.py
+-'  1  0  ~/app/__init__.py
+-'  1  0  ~/app/database.py
+-'  8  0  ~/app/__pycache__
+-'  7  0  ~/app/personalarea/views.py
+-'  8  0  ~/app/personalarea/__pycache__
+-'  11  16  ~/app/__init__.py
+-'  65  0  ~/app/personalarea/views.py
+-'  18  0  ~/app/__init__.py
+-'  22  0  ~/app/personalarea/views.py
+-'  21  95  ~/data_base/bd_app.py
 -'  1  0  ~/data_base/bd_app.py
--'  1  0  ~/uwsgi.ini
 -'  5  13  ~/uwsgi.ini
 -'  21  17  ~/uwsgi.ini
 -'  19  17  ~/uwsgi.ini
+-'  1  0  ~/app/database.py
+-'  8  0  ~/app/__pycache__
+-'  7  0  ~/app/personalarea/views.py
+-'  8  0  ~/app/personalarea/__pycache__
+-'  1  0  ~/app/database.py
+-'  22  0  ~/app/__init__.py
+-'  22  0  ~/app/__init__.py
+-'  1  0  ~/app/__init__.py
+-'  1  0  ~/app/database.py
+-'  8  0  ~/app/__pycache__
+-'  7  0  ~/app/personalarea/views.py
+-'  8  0  ~/app/personalarea/__pycache__
+-'  11  16  ~/app/__init__.py
+-'  65  0  ~/app/personalarea/views.py
+-'  18  0  ~/app/__init__.py
+-'  22  0  ~/app/personalarea/views.py
+-'  1  0  ~/app/database.py
+-'  8  0  ~/app/__pycache__
+-'  7  0  ~/app/personalarea/views.py
+-'  8  0  ~/app/personalarea/__pycache__
+-'  1  0  ~/app/database.py
+-'  22  0  ~/app/__init__.py
 -'  1  0  ~/uwsgi.ini
+-'  22  0  ~/app/__init__.py
+-'  1  0  ~/app/__init__.py
+-'  1  0  ~/app/database.py
+-'  8  0  ~/app/__pycache__
+-'  7  0  ~/app/personalarea/views.py
+-'  8  0  ~/app/personalarea/__pycache__
+-'  11  16  ~/app/__init__.py
+-'  65  0  ~/app/personalarea/views.py
+-'  18  0  ~/app/__init__.py
+-'  22  0  ~/app/personalarea/views.py
 -'  5  13  ~/uwsgi.ini
 -'  21  17  ~/uwsgi.ini
 -'  19  17  ~/uwsgi.ini
+-'  5  0  ~/data_base/bd_app.py
+-'  1  0  ~/uwsgi.ini
+-'  22  0  ~/app/__init__.py
+-'  1  0  ~/app/__init__.py
+-'  1  0  ~/app/database.py
+-'  8  0  ~/app/__pycache__
+-'  7  0  ~/app/personalarea/views.py
+-'  8  0  ~/app/personalarea/__pycache__
+-'  11  16  ~/app/__init__.py
+-'  65  0  ~/app/personalarea/views.py
+-'  18  0  ~/app/__init__.py
+-'  22  0  ~/app/personalarea/views.py
+-'  22  95  ~/data_base/bd_app.py
+-'  5  13  ~/uwsgi.ini
+-'  21  17  ~/uwsgi.ini
+-'  19  17  ~/uwsgi.ini
+-'  1  0  ~/app/database.py
+-'  8  0  ~/app/__pycache__
+-'  7  0  ~/app/personalarea/views.py
+-'  8  0  ~/app/personalarea/__pycache__
+-'  1  0  ~/app/database.py
+-'  22  0  ~/app/__init__.py
 
 # History of marks within files (newest to oldest):
 
+> ~/.gitignore
+	"	5	7
+	^	5	8
+	.	5	7
+	+	30	5
+	+	4	7
+	+	5	7
+
+> ~/.gitignor
+	"	1	0
+
+> ~/adapters/nikto/nikto_src/nikto-master/program/nikto.pl
+	"	1	0
+
+> ~/scan_scheduler/scheduler.py
+	"	51	53
+	^	51	54
+	.	52	0
+	+	52	0
+
+> ~/app/personalarea/models.py
+	"	37	15
+	^	37	16
+	.	36	16
+	+	32	76
+	+	33	15
+	+	34	15
+	+	35	19
+	+	37	15
+	+	33	12
+	+	34	12
+	+	35	70
+	+	36	16
+
+> ~/settings.secret
+	"	13	13
+	^	13	14
+	.	13	13
+	+	13	13
+
+> ~/requirements/base.txt
+	"	1	0
+	^	32	16
+	.	32	12
+	+	1	0
+	+	1	0
+	+	1	162
+	+	1	0
+	+	32	12
+
 > ~/data_base/bd_app.py
-	"	22	95
-	^	22	96
-	.	22	95
-	+	22	95
+	"	81	10
+	^	88	96
+	.	88	95
+	+	21	95
+	+	3	43
+	+	4	0
+	+	88	95
 
 > ~/uwsgi.ini
 	"	1	0
@@ -55,3 +208,16 @@
 	+	1	7
 	+	21	17
 	+	5	13
+
+> ~/app/__init__.py
+	"	22	0
+	^	11	17
+	.	12	0
+	+	11	17
+	+	12	0
+
+> ~/app/database.py
+	"	1	0
+
+> ~/app/personalarea/views.py
+	"	7	0

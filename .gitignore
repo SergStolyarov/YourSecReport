@@ -1,6 +1,9 @@
 .idea/
 .idea/*
 
+.cache/
+.cache/*
+
 lib/
 lib/*
 
@@ -20,7 +23,12 @@ local/*
 include/
 include/*
 
-env
+env/
+env/*
+
+log/
+log/*
+
 *.secret
 
 *.ini
