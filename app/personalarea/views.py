@@ -8,27 +8,29 @@ from app.database import db
 
 personalarea = Blueprint('personalarea', __name__)
 
-@personalarea.route("/", methods=['GET'])
+@personalarea.route("/", methods=['GET', 'POST'])
 def main():
     return render_template("index.html")
 
-
 @personalarea.route("/personal", methods=['POST', 'GET'])
-def personal():
+@personalarea.route("/personal/<ip>")
+def personal(ip=None):
     form = AddServiceForm()
-    services = current_user._services
+    services = current_user.get_last_scan_date()
     if form.validate_on_submit():
         new_service_ip = form.ip.data
         db.add_target(current_user._name, new_service_ip)
         return redirect(url_for('personalarea.personal'))
-
+    if ip:
+        db.del_target(current_user._name, ip)
+        return redirect(url_for('personalarea.personal'))
     return render_template("personal.html", form=form, services=services)
 
 @personalarea.route("/signup", methods=['POST', 'GET'])
 def sign_up():
 
     if current_user.is_authenticated:
-        return redirect("/personal")
+        return redirect(url_for('personalarea.personal'))
 
     form = SignUpForm()
 
@@ -49,7 +51,7 @@ def login():
         return redirect(url_for('personalarea.personal'))
 
     form = LoginForm()
-    if form.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         user = User(form.name.data)
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or bad password.')

@@ -24,14 +24,21 @@
       <th scope="col">#</th>
       <th scope="col">Service</th>
       <th scope="col">Last Scan Date</th>
+      <th scope="col">Action</th> 
     </tr>
   </thead>
   <tbody>
-    {% for service in services %}
+    {% for service, last_scan_data in services.items() %}
         <tr>
             <td>{{ loop.index }}</td>
             <td>{{ service }}</td>
-            <td>01-02-2018</td>
+            <td>{{ last_scan_data }}</td>
+            <td>
+                <a href="/personal/{{ service }}" class="btn btn-primary a-btn-slide-text">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                <span><strong>Delete</strong></span>            
+                </a>
+            </td>
         </tr>
     {% endfor %}
   </tbody>
