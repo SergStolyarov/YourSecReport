@@ -1,12 +1,15 @@
-from bd_app import check_report_time, Client_DB, Report_DB
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from data_base.bd_app import check_report_time, Client_DB, Report_DB
 from datetime import datetime
 from time import sleep
-import os
 from queue import Queue
 from sw_controller.scan_task import ScanTask
 from threading import Thread
 from report_generator import generate_report, pdf
 from report_sendler.sendler import send_mail
+
 
 DAYS_FROM_LAST_SCAN = 7
 clientdb = Client_DB()
@@ -46,8 +49,9 @@ class ReadyScanProcessor(Thread):
                 self.reportdb.add_report(login=scan.login, target=scan.target,
                                          report_type=scan.type_name, report=scan.report_json)
                 path, filename = scan.get_pdf_report()
+                print(dir(scan))
                 try:
-                    send_mail(scan.login, path, filename)
+                    send_mail(clientdb.get_mail(scan.login), path, filename)
                 except Exception as e:
                     print(e)
                 send_queue.task_done()
@@ -55,9 +59,9 @@ class ReadyScanProcessor(Thread):
                 sleep(5)
 
 def get_hosts_to_scan(days):
-    if __debug__:  # run with -O
-        print('----DEBUG: LOCALHOST IS USED----')
-        return [('debug', '127.0.0.1')]  # change 'debug' to your email
+    #if __debug__:  # run with -O
+    #    print('----DEBUG: LOCALHOST IS USED----')
+    #    return [('debug', '127.0.0.1')]  # change 'debug' to your email
     logins_and_hosts_dict = check_report_time(days)
     hosts = []
     for key, value in logins_and_hosts_dict.items():  # convert {'login', ['ip', 'ip2']} to (login, ip) tuple
@@ -86,4 +90,4 @@ if __name__ == '__main__':
                 print(host[1], scan[0], scan[1])
                 scan_queue.task_done()
         # Заснуть, если возможно
-        sleep(5*60)
+        sleep(1*60)

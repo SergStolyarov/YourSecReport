@@ -12,7 +12,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(os.environ['APP_SETTINGS'])
     #db.init_app(app)
-    
+
     login_manager.init_app(app)
 
     import app.personalarea.views as personalarea

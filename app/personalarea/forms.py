@@ -9,7 +9,8 @@ def check_user_unique(form, username):
         raise ValidationError('User exists')
 
 def check_user_exists(form, username):
-    if username.data not in user_credentials:
+    user = db.get_client(username.data)
+    if not user:
         raise ValidationError('User doesn\'t exist')
 
 def check_password(form, password):
@@ -29,7 +30,7 @@ class SignUpForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    name = TextField('name', validators=[Required()])
+    name = TextField('name', validators=[Required(), check_user_exists])
     password = PasswordField('password', validators=[Required()])
 
     def validate_username(self, name):
