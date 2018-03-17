@@ -57,7 +57,11 @@ class NmapAdapter(ToolAdapter):
         report_dict = {}
         report_dict['starttime'] = report.started
         report_dict['endtime'] = report.endtime
-        report_dict['host'] = self.ip
+        try:
+            report_dict['host'] = self.ip
+        except Exception as e:
+            logger.critical("Exception raised while parsing a scan, nmap stderr: {0}".format(self.nmproc.stderr))
+            return None
         host = report.hosts[0]
         report_dict['hoststatus'] = host.status
         services = []

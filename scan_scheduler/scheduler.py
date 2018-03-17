@@ -58,9 +58,9 @@ class ReadyScanProcessor(Thread):
                 sleep(5)
 
 def get_hosts_to_scan(days):
-    #if __debug__:  # run with -O
-    #    print('----DEBUG: LOCALHOST IS USED----')
-    #    return [('debug', '127.0.0.1')]  # change 'debug' to your email
+    if __debug__:  # run with -O
+       print('----DEBUG: LOCALHOST IS USED----')
+       return [('test', '127.0.0.1'), ('test', '127.0.0.1')]  # change 'debug' to your email
     logins_and_hosts_dict = check_report_time(days)
     hosts = []
     for key, value in logins_and_hosts_dict.items():  # convert {'login', ['ip', 'ip2']} to (login, ip) tuple
@@ -82,11 +82,11 @@ if __name__ == '__main__':
             scan.start()
             scan.join() # т.к. пока 1 сервер, пусть сканятся по очереди
             print('Scanning {0} for user {1} finished'.format(host[1], host[0]))
-            for scan in iter(scan_queue.get, None):
+            # for scan in iter(scan_queue.get, None):
+            for scan in list(scan_queue.queue):
                 # Результат скана сохранить в базу и отправить на почту
                 scan_result = Scan(login=host[0], target=host[1], type_name=scan[0], report_json=scan[1])
                 send_queue.put(scan_result)
                 print(host[1], scan[0], scan[1])
-                scan_queue.task_done()
         # Заснуть, если возможно
         sleep(1*60)
